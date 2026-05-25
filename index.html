@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Admin Panel</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f1f1f1;
+padding:10px;
+}
+
+.card{
+background:white;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+</style>
+
+</head>
+<body>
+
+<div id="users"></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+
+const firebaseConfig = {
+databaseURL:"https://sbk-admin-default-rtdb.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+firebase.database().ref("All_Users/Data/DeviceInfo")
+.on("value", snap => {
+
+document.getElementById("users").innerHTML="";
+
+snap.forEach(child => {
+
+let d = child.val();
+
+document.getElementById("users").innerHTML += `
+<div class="card">
+<b>login:</b><br><br>
+
+Name: ${d.d_name || ""}<br>
+Device: ${d.device || ""}<br>
+Serial: ${d.uesr_serial || ""}
+</div>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

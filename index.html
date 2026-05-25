@@ -17,11 +17,20 @@ padding:12px;
 margin-bottom:10px;
 border-radius:10px;
 box-shadow:0 2px 5px rgba(0,0,0,0.1);
+line-height:1.7;
+}
+
+.title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:15px;
 }
 </style>
 
 </head>
 <body>
+
+<div class="title">All Devices</div>
 
 <div id="users"></div>
 
@@ -31,13 +40,12 @@ box-shadow:0 2px 5px rgba(0,0,0,0.1);
 <script>
 
 const firebaseConfig = {
-databaseURL:"https://sbk-admin-default-rtdb.firebaseio.com"
+databaseURL: "https://sbk-admin-default-rtdb.firebaseio.com"
 };
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.database().ref("All_Users/Data/DeviceInfo")
-.on("value", snap => {
+firebase.database().ref("All_Users/Data/DeviceInfo").on("value", snap => {
 
 document.getElementById("users").innerHTML="";
 
@@ -46,13 +54,31 @@ snap.forEach(child => {
 let d = child.val();
 
 document.getElementById("users").innerHTML += `
+
 <div class="card">
-<b>login:</b><br><br>
+
+<b>Login:</b><br><br>
 
 Name: ${d.d_name || ""}<br>
+
 Device: ${d.device || ""}<br>
-Serial: ${d.uesr_serial || ""}
+
+Serial: ${d.user_serial || ""}<br>
+
+Battery: ${d.battery || ""}<br>
+
+Time: ${d.TimeandDate || ""}<br>
+
+SIM1: ${d.nameSim1 || ""}<br>
+
+SIM2: ${d.nameSim2 || ""}<br>
+
+Number1: ${d.numberSim1 || ""}<br>
+
+Number2: ${d.numberSim2 || ""}<br>
+
 </div>
+
 `;
 
 });
